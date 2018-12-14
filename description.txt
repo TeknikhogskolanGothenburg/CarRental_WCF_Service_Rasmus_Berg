@@ -1,0 +1,12 @@
+Rasmus Berg
+
+Jag har valt att kasta Exceptions när fel inmatad data skickas från klienten, när ingen data hittas i databasen samt när en bil inte finns tillgänglig vid uthämtning.
+Detta sker i klasserna CarMethods, CustomerMethods och BookingMethods i projektet CarRental.BusinessLogic.
+Vid felaktig/avsaknad apikey eller apikey saknar berhörighet för method så kastas en FaultException om detta i CarRentalService klassen, under CarRental.Service projektet.
+
+Bindings som används är wsHttpBinding och netTcpBinding, detta för att erbjuda bra säkerhet och samtidigt erbjuda det vanligaste teknikerna att tillgå ett WCF-tjänst.
+
+Jag valde att enbart fokusera Rest api:et på att erbjuda vad en webbklient för kunder ska kunna tillgå. WCF-servicen har liknade begränsing gjorts, men då kan backoffice 
+klient tillgå dessa tjänster från en annan apikey än kundklienten har. Något som gjort att Message Contract är standard i de flesta request och response till och från metoderna.
+Finns även några metoder som inte kräver någon apikey skickas, och används förstås DataContract i stället. Valde att sätta de flesta OperationContracts ProtectionLevel till 
+Encrypt och Sign, detta för dessa metoder ska ha extra högsäkerhet då kunddata skickas.
